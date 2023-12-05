@@ -1,0 +1,20 @@
+{
+    "name": "EasyConfig.Editor",
+    "rootNamespace": "",
+    "references": [
+        "EasyConfig.Runtime",
+        "Serialization.Runtime",
+        "Serialization.UJson"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
