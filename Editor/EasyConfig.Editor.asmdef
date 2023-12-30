@@ -3,8 +3,8 @@
     "rootNamespace": "",
     "references": [
         "EasyConfig.Runtime",
-        "Serialization.Runtime",
-        "Serialization.UJson"
+        "Common.Runtime",
+        "Common.Unity"
     ],
     "includePlatforms": [
         "Editor"
