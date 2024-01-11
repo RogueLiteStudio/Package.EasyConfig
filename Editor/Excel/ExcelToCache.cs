@@ -31,7 +31,7 @@ namespace EasyConfig.Editor
         }
 
 
-        public void Export()
+        public void Export(Action<string> modifyCallback)
         {
             if (!Directory.Exists(CachePath))
                 Directory.CreateDirectory(CachePath);
@@ -70,7 +70,15 @@ namespace EasyConfig.Editor
 
                             SheetData sheetData = ReadSheet(reader);
                             string exportFilePath = Path.Combine(CachePath, $"{reader.Name}.json");
-                            File.WriteAllText(exportFilePath, JsonUtility.ToJson(sheetData, true));
+                            string writeJson = JsonUtility.ToJson(sheetData, true);
+                            if (File.Exists(exportFilePath))
+                            {
+                                string json = File.ReadAllText(exportFilePath);
+                                if (json == writeJson)
+                                    continue;
+                            }
+                            File.WriteAllText(exportFilePath, writeJson);
+                            modifyCallback?.Invoke(reader.Name);
                         } while (reader.NextResult());
                     }
                 }
