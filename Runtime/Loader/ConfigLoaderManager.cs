@@ -24,15 +24,20 @@ namespace EasyConfig
             loaders.Add(loader.TypeName, loader);
         }
 
-        public void OnDataModify(string type, string name, byte[] data)
+        public static void OnDataModify(string type, string name, byte[] data)
         {
-            if (loaders.TryGetValue(type, out var loader))
+            if (_instance != null && _instance.loaders.TryGetValue(type, out var loader))
                 loader.OnDataModify(name, data);
         }
 
         public void SetDataProvider(IDataProvider provider)
         {
             dataProvider = provider;
+        }
+        //提供给编辑器模式的设置接口，如果已经有了DataProvider则不会被覆盖
+        public void TrySetDataProvider(IDataProvider provider)
+        {
+            dataProvider ??= provider;
         }
 
         public byte[] LoadData(string type, string name)
