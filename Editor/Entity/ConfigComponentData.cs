@@ -6,6 +6,9 @@ namespace EasyConfig
     public class ConfigComponentData : ISerializationCallbackReceiver
     {
         public bool Enabled = true;
+        public string Name;
+        public string Comment;
+        public string TypeGUID => jsonData.TypeGUID;
         [SerializeField]
         [HideInInspector]
         private SerializationData jsonData;

@@ -4,7 +4,8 @@
     "references": [
         "EasyConfig.Runtime",
         "Common.Runtime",
-        "Common.Unity"
+        "Common.Unity",
+        "Common.Editor"
     ],
     "includePlatforms": [
         "Editor"

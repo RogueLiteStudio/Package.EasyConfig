@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace EasyConfig
 {
-    public class ConfigableEntity : ScriptableObject
+    public class ConfigableEntity : ScriptableObject, IPropertyEditorContext
     {
         public int UID;//全局唯一ID，运行时用
         public string Name;//显示用名字
+        public string Comment;//注释
         [SerializeField]
         private List<ConfigComponentData> components = new List<ConfigComponentData>();
         public IReadOnlyList<ConfigComponentData> Components=> components;
@@ -24,6 +25,12 @@ namespace EasyConfig
             newComp.SetData(newData);
             components.Add(newComp);
             return newData;
+        }
+
+        public bool TryGet<T>(out T result) where T : class, IConfigComponent
+        {
+            result = GetComponent<T>();
+            return result != null;
         }
 
         public T GetComponent<T>() where T : class, IConfigComponent
@@ -48,6 +55,12 @@ namespace EasyConfig
                     return;
                 }
             }
+        }
+
+        public void OnPropertyModify()
+        {
+            UnityEditor.Undo.RegisterCompleteObjectUndo(this, "entity config property modify");
+            UnityEditor.EditorUtility.SetDirty(this);
         }
     }
 }
