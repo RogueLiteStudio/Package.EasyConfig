@@ -9,6 +9,7 @@ namespace EasyConfig
     /// <typeparam name="TAsset"></typeparam>
     public abstract class TAssetExportDataProvider<TAsset> : IEditorDataProvider where TAsset : UnityEngine.ScriptableObject
     {
+        protected virtual bool IncludeChildrenType => false;
         public byte[] Load(string type, string name)
         {
             var assetPath = GetAssetPath(type, name);
@@ -42,7 +43,7 @@ namespace EasyConfig
             {
                 var asset = AssetDatabase.LoadAssetAtPath<TAsset>(assetPath);
                 //这里需要判断类型，因为可能有继承关系,如果有特殊需求，可以在子类中重写OnAssetModify
-                if (asset && asset.GetType() == typeof(TAsset))
+                if (asset && (IncludeChildrenType || asset.GetType() == typeof(TAsset)))
                 {
                     DoExport(asset);
                     return true;
