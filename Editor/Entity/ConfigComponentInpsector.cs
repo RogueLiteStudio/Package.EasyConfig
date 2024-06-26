@@ -11,20 +11,10 @@ namespace EasyConfig
         public ConfigableEntity Entity;
         public ConfigComponentData Config;
         protected IDrawer drawer;
-        private bool foldout = true;
-        private string typeName;
-        private string tooltip;
-        public static GUIStyle backGrountStyle = new GUIStyle("OL box NoExpand") { padding = new RectOffset(1, 0, 0, 0) };
-        public static GUIStyle toolbar = new GUIStyle("IN Title") { padding = new RectOffset(0, 0, 2, 0) };
-
         protected virtual void OnCreate()
         {
             System.Type type = Config.Data.GetType();
             drawer = DrawerCollector.CreateDrawer(type);
-            var dpName = type.GetCustomAttribute<DisplayNameAttribute>();
-            typeName = dpName != null ? dpName.Name : type.Name;
-            if (dpName != null)
-                tooltip = dpName.ToolTip;
         }
         public virtual void OnInsperctorGUI()
         {
