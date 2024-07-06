@@ -41,10 +41,11 @@ namespace EasyConfig
         {
             if (CheckAssetPath(assetPath))
             {
-                var asset = AssetDatabase.LoadAssetAtPath<TAsset>(assetPath);
+                var type = AssetDatabase.GetMainAssetTypeAtPath(assetPath);
                 //这里需要判断类型，因为可能有继承关系,如果有特殊需求，可以在子类中重写OnAssetModify
-                if (asset && (IncludeChildrenType || asset.GetType() == typeof(TAsset)))
+                if (typeof(TAsset).IsAssignableFrom(type) && (IncludeChildrenType || type == typeof(TAsset)))
                 {
+                    var asset = AssetDatabase.LoadAssetAtPath<TAsset>(assetPath);
                     DoExport(asset);
                     return true;
                 }
